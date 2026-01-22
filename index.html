@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Susan Rose Nursery — Living Art for Your Home</title>
+    <meta name="description" content="Susan Rose Nursery: A curated botanical studio offering heirloom plants, garden design, and sustainable growing for the modern home.">
+    
+    <!-- Fonts: Fraunces for elegance, Inter for clean readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette: Earthy, muted, sophisticated */
+            --color-bg: #f4f1ea;       /* Warm linen/paper */
+            --color-text: #2c362f;     /* Deep forest charcoal */
+            --color-text-light: #5d665e;
+            --color-accent: #d48c84;   /* Muted terracotta rose */
+            --color-green: #3a4d3f;    /* Moss green */
+            --color-sage: #8fa391;     /* Sage green */
+            --color-white: #ffffff;
+            
+            --font-display: 'Fraunces', serif;
+            --font-body: 'Inter', sans-serif;
+
+            --spacing-container: max(2rem, 5vw);
+            --border-radius: 8px;
+            --transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            line-height: 1.1;
+            color: var(--color-text);
+        }
+
+        h1 { font-size: clamp(3rem, 8vw, 5.5rem); letter-spacing: -0.02em; }
+        h2 { font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.01em; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
+        p { margin-bottom: 1.5rem; max-width: 60ch; color: var(--color-text-light); }
+        
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; border-radius: var(--border-radius); }
+
+        /* Utility */
+        .container {
+            width: 100%;
+            max-width: 1400px; /* Wide, airy layout */
+            margin: 0 auto;
+            padding: 0 var(--spacing-container);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: 1px solid var(--color-text);
+            border-radius: 50px;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--color-text);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform var(--transition);
+        }
+
+        .btn:hover { color: var(--color-bg); }
+        .btn:hover::before { transform: scaleX(1); transform-origin: left; }
+
+        .btn-primary {
+            background: var(--color-text);
+            color: var(--color-bg);
+            border-color: var(--color-text);
+        }
+        .btn-primary:hover { color: var(--color-text); }
+        .btn-primary::before { background: var(--color-bg); }
+
+        /* Texture Overlay */
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.04;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.5rem;
+            letter-spacing: -0.03em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo span { color: var(--color-accent); font-size: 2rem; line-height: 0; padding-bottom: 5px; }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        nav a:hover { opacity: 1; color: var(--color-accent); }
+
+        .mobile-toggle { display: none; cursor: pointer; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 85vh;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            align-items: center;
+            gap: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .hero-content {
+            position: relative;
+        }
+
+        .hero h1 { margin-bottom: 1.5rem; }
+        .hero-tag {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            display: block;
+            font-weight: 600;
+        }
+
+        .hero-image {
+            height: 100%;
+            max-height: 700px;
+            border-radius: 100px 100px 0 0;
+            overflow: hidden;
+            position: relative;
+            background: var(--color-sage);
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s ease;
+        }
+        .hero-image:hover img { transform: scale(1.05); }
+
+        /* Featured Plants (Scroll Grid) */
+        .featured {
+            padding: 6rem 0;
+            overflow: hidden;
+        }
+
+        .featured-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 3rem;
+            padding: 0 var(--spacing-container);
+        }
+
+        .scroll-container {
+            display: flex;
+            gap: 2rem;
+            padding: 0 var(--spacing-container);
+            overflow-x: auto;
+            padding-bottom: 2rem;
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scroll-container::-webkit-scrollbar { display: none; }
+
+        .plant-card {
+            min-width: 320px;
+            scroll-snap-align: start;
+            cursor: pointer;
+        }
+
+        .plant-img-wrapper {
+            height: 400px;
+            background-color: #e8e4db;
+            margin-bottom: 1.5rem;
+            border-radius: 4px; /* More architectural */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .plant-img-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .plant-card:hover .plant-img-wrapper img { transform: scale(1.03); }
+
+        .plant-meta { display: flex; justify-content: space-between; align-items: baseline; }
+        .plant-price { font-family: var(--font-body); opacity: 0.6; }
+
+        /* Philosophy / About */
+        .about {
+            padding: 8rem 0;
+            background-color: var(--color-green);
+            color: var(--color-bg);
+            margin: 4rem 0;
+        }
+        .about .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about h2, .about p { color: var(--color-bg); opacity: 0.9; }
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 2rem;
+        }
+        .stat-item h4 { font-size: 3rem; margin-bottom: 0.5rem; color: var(--color-accent); }
+        .stat-item span { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; }
+
+        /* Services */
+        .services {
+            padding: 6rem 0;
+        }
+        .service-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .service-item {
+            padding: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .service-item:hover { border-color: var(--color-text); background: #fff; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); } 
+        .icon { font-size: 2rem; margin-bottom: 1rem; color: var(--color-accent); }
+
+        /* Contact / Footer */
+        footer {
+            padding: 6rem 0 2rem;
+            background: #fff;
+            margin-top: 4rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(3, 1fr);
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+        .footer-brand p { margin-top: 1rem; font-size: 0.9rem; }
+        
+        .footer-col h4 {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .footer-col ul li { margin-bottom: 0.8rem; }
+        .footer-col a { font-size: 0.95rem; opacity: 0.7; }
+        .footer-col a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+        .newsletter input {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            border-bottom: 1px solid var(--color-text);
+            background: transparent;
+            font-family: var(--font-body);
+            margin-bottom: 1rem;
+            outline: none;
+        }
+        .newsletter button {
+            background: none; border: none; padding: 0;
+            text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 700; cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero, .about .container, .footer-content { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-image { order: -1; border-radius: 0 0 100px 100px; height: 50vh; }
+            h1 { font-size: 3.5rem; }
+            nav { display: none; } /* Simplified mobile nav for demo */
+            .mobile-toggle { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+
+    <div class="container">
+        <header>
+            <a href="#" class="logo"><span>✿</span> Susan Rose</a>
+            <nav>
+                <ul>
+                    <li><a href="#shop">Shop Plants</a></li>
+                    <li><a href="#services">Design Services</a></li>
+                    <li><a href="#about">Our Story</a></li>
+                    <li><a href="#care">Care Guide</a></li>
+                    <li><a href="#contact" class="btn">Book Consult</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-toggle">Menu</div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-tag">Botanical Atelier</span>
+                <h1>Cultivating<br><i>Living</i> Sanctuaries.</h1>
+                <p>More than just a nursery. We curate rare foliage, design indoor landscapes, and help you grow a connection with nature in the comfort of your home.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="#shop" class="btn btn-primary">Browse Collection</a>
+                    <a href="#about" class="btn" style="border: none; margin-left: 1rem; text-decoration: underline; text-underline-offset: 4px;">Read our philosophy</a>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <!-- Using a placeholder from Unsplash for "elegant plant" -->
+                <img src="https://images.unsplash.com/photo-1545241047-6083a3684587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Elegant Monstera leaf in soft light">
+            </div>
+        </section>
+    </div>
+
+    <section id="shop" class="featured">
+        <div class="featured-header container">
+            <div>
+                <h2>Seasonal Curation</h2>
+                <p>Hand-picked for resilience and beauty. Acclimated to indoor living.</p>
+            </div>
+            <a href="#" class="btn">View All</a>
+        </div>
+        
+        <div class="scroll-container">
+            <!-- Plant 1 -->
+            <div class="plant-card">
+                <div class="plant-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ficus Audrey">
+                </div>
+                <div class="plant-meta">
+                    <h3>Ficus Audrey</h3>
+                    <span class="plant-price">$120</span>
+                </div>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">The elegant cousin of the fiddle leaf.</p>
+            </div>
+            
+            <!-- Plant 2 -->
+            <div class="plant-card">
+                <div class="plant-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1599598425947-d352758dc979?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Olive Tree">
+                </div>
+                <div class="plant-meta">
+                    <h3>Indoor Olive</h3>
+                    <span class="plant-price">$85</span>
+                </div>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">Mediterranean warmth for sunny corners.</p>
+            </div>
+
+            <!-- Plant 3 -->
+            <div class="plant-card">
+                <div class="plant-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1600411833196-7c1f6b152702?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Monstera Deliciosa">
+                </div>
+                <div class="plant-meta">
+                    <h3>Monstera Deliciosa</h3>
+                    <span class="plant-price">$65</span>
+                </div>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">The classic architectural statement.</p>
+            </div>
+
+             <!-- Plant 4 -->
+             <div class="plant-card">
+                <div class="plant-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1612361661642-e0283e74a625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bird of Paradise">
+                </div>
+                <div class="plant-meta">
+                    <h3>Bird of Paradise</h3>
+                    <span class="plant-price">$140</span>
+                </div>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;">Tropical height and drama.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div>
+                <h2>Not Quantity. Connectivity.</h2>
+                <p style="color: rgba(255,255,255,0.8);">At Susan Rose, we believe a plant is not just decor; it is a living companion. We source ethically, pot in hand-thrown ceramics, and provide detailed care schematics for every species.</p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <h4>100%</h4>
+                        <span>Pest-Free Guarantee</span>
+                    </div>
+                    <div class="stat-item">
+                        <h4>15+</h4>
+                        <span>Years in Botany</span>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Local</h4>
+                        <span>Sustainably Grown</span>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Care</h4>
+                        <span>Lifetime Support</span>
+                    </div>
+                </div>
+            </div>
+            <div style="position: relative;">
+                 <img src="https://images.unsplash.com/photo-1463320898484-cdee8141c787?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Hands potting a plant" style="border-radius: 8px; filter: sepia(20%);">
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="container services">
+        <h2>Expert Services</h2>
+        <div class="service-list">
+            <div class="service-item">
+                <div class="icon">✎</div>
+                <h3>Interior Botanical Design</h3>
+                <p>We visit your space, assess light levels, and curate a collection that fits your lifestyle and aesthetic.</p>
+            </div>
+            <div class="service-item">
+                <div class="icon">☂</div>
+                <h3>Plant Sitting & Care</h3>
+                <p>Going away? Or just need a refresh? Our team provides repotting, pruning, and vacation care packages.</p>
+            </div>
+            <div class="service-item">
+                <div class="icon">⚘</div>
+                <h3>Corporate Installing</h3>
+                <p>Breathe life into your office. We design and maintain large-scale installations for businesses.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo"><span>✿</span> Susan Rose</a>
+                    <p>Bringing the outside in, with intention.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Large Specimen</a></li>
+                        <li><a href="#">Pet Friendly</a></li>
+                        <li><a href="#">Pots & Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Studio</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Visit the Nursery</a></li>
+                        <li><a href="#">Workshops</a></li>
+                        <li><a href="#">Journal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col newsletter">
+                    <h4>Stay Rooted</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 1rem;">Join our newsletter for weekly care tips.</p>
+                    <form id="newsletter-form">
+                        <input type="email" placeholder="Email Address" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #eee; padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: #999;">
+                <span>© 2026 Susan Rose Nursery. All rights reserved.</span>
+                <span>Privacy Policy · Terms</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple intersection observer for fade-in animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Select elements to animate
+            const animatedElements = document.querySelectorAll('.plant-card, .service-item, .stat-item, .hero-content');
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(el);
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Newsletter interaction
+            const form = document.getElementById('newsletter-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                const originalText = btn.innerText;
+                
+                btn.innerText = 'Subscribed!';
+                form.querySelector('input').value = '';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
